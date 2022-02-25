@@ -1,0 +1,19 @@
+- What are all the controllers that are are enabled by default in Controller manager component?
+Kubernetes default controller are the replication controller, endpoints controller, namespace controller, and serviceaccounts controller - https://kubernetes.io/docs/reference/command-line-tools-reference/kube-controller-manager/
+Official documentation-
+- cronjob
+- daemon
+- deployment
+- disruption
+- endpoint
+- endpointslice
+- endpointslicemirroring
+- job
+- namespace
+- nodelifecycle
+- podautoscaler
+- replicaset
+- replication
+- resourcequota
+- serviceaccount
+- statefulset

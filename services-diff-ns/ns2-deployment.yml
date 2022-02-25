@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: network-tools
+  namespace: ns2
+spec:
+  selector:
+    matchLabels:
+      run: network-tools
+  replicas: 2
+  template:
+    metadata: 
+      labels:
+        run: network-tools
+    spec:
+      containers:
+      - name: network-tools
+        image: jonlabelle/network-tools
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "while true; do sleep 30; done;" ]
+
+#  command to access nginx pod from other namespace: <servicename>.<namespace>.svc.cluster.local -> curl nginx.ns1.svc.cluster.local
+
+
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: nginx
+#   namespace: ns1
+# spec:
+#   selector:
+#     matchLabels:
+#       run: nginx
+#   replicas: 2
+#   template:
+#     metadata:
+#       labels:
+#         run: nginx
+#     spec:
+#       containers:
+#       - name: nginx
+#         image: nginx
+#         ports:
+#         - containerPort: 80
+

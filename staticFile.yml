@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: init-test-pod
+spec:
+  volumes:
+  - name: mydir
+    emptyDir: {}
+  containers:
+  - name: myapp-container
+    image: alpine
+    command: ['sh', '-c', 'if [ -f /workdir/test.txt ]; then sleep 99999; fi']
+    volumeMounts:
+    - name: mydir
+      mountPath: /workdir
+
+    livenessProbe:
+      exec:
+        command:
+        - cat
+        - /workdir/test.txt
+      initialDelaySeconds: 5
+      periodSeconds: 5
+  initContainers:
+  - name: init-myservice
+    image: busybox:1.28
+    command: ['sh', '-c', 'mkdir /workdir; echo>/workdir/test.txt']
+    volumeMounts:
+    - name: mydir
+      mountPath: /workdir
