@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secret-from-file
+spec:
+  containers:
+    - name: secret-from-file
+      image: ubuntu
+      command: [ "/bin/bash", "-c", "--" ]
+      args: [ "while true; do sleep 30; done;" ]
+      env:
+        # Define the environment variable
+        - name: username
+          valueFrom:
+            secretKeyRef:
+              name: secret-from-file
+              key: username
+        - name: password
+          valueFrom:
+            secretKeyRef:
+              name: secret-from-file
+              key: password
+
+# kubectl exec  --stdin --tty config-test -- bash
+# echo $username

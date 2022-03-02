@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: config-test
+spec:
+  containers:
+    - name: config-test
+      image: ubuntu
+      command: [ "/bin/bash", "-c", "--" ]
+      args: [ "while true; do sleep 30; done;" ]
+      env:
+        # Define the environment variable
+        - name: envname
+          valueFrom:
+            configMapKeyRef:
+              name: cm-one
+              key: name
+
+# kubectl exec  --stdin --tty config-test -- bash
+# echo $envname

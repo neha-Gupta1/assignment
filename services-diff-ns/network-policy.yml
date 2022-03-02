@@ -12,11 +12,10 @@ spec:
   ingress:
     - from:
       - podSelector:
-        matchLabels:
-          run: nginx
+          matchLabels:
+            run: nginx
       - namespaceSelector:
           matchLabels:
-            name: ns1
+            run : labeldoesnotexistinns2 
       ports:
-        - protocol: TCP
-          port: 80
+        - port: 80

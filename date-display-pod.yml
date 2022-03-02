@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: date-display
+spec:
+  volumes:
+  - name: mydir
+    emptyDir: {}
+  containers:
+    - name: date-display
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/usr/share"
+          name: mydir
+
+  initContainers:
+  - name: insert-date
+    image: ubuntu
+    command: ['/bin/bash', '-c', 'mkdir /usr/share/nginx;cd /usr/share/nginx; mkdir html;cd html; date >index.html']
+    volumeMounts:
+    - name: mydir
+      mountPath: /usr/share
