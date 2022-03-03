@@ -1,0 +1,22 @@
+# its the node specific node. Which means failure of node will lead to loss of data too.
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: host-path-storage
+spec:
+  volumes:
+    - name: host-path-storage
+      hostPath:
+        path: /data
+  containers:
+    - name: host-path-storage
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: host-path-storage
+
+
