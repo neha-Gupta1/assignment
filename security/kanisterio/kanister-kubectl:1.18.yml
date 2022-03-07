@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kanister-kubectl
+spec:
+  serviceAccountName: custom-sa
+  containers:
+    - name: kanister-kubectl
+      image: kanisterio/kanister-kubectl:1.18
+
+     
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+ name: custom-sa
+ namespace: default
+ 
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: custom-sa
+rules:
+  - apiGroups: 
+    - ""
+    resources: 
+    - "pods"
+    verbs: 
+    - "list"
+    - "get"
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: custom-sa
+subjects:
+- kind: ServiceAccount
+  name: custom-sa
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: custom-sa
+  apiGroup: rbac.authorization.k8s.io
+
+
+
+# start the apiserver with --authorization-mode=RBAC
+# dafault service-account is the account created on creation of namespace. 

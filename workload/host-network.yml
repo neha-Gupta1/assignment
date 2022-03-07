@@ -3,7 +3,6 @@ kind: Pod
 metadata:
   name: network-tools
 spec:
-  hostNetwork: true
   containers:
   - name: network-tools
     image: jonlabelle/network-tools
